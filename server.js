@@ -7,8 +7,11 @@ const PORT = 3000;
 
 // Helper: Get User ID from username
 async function getUserId(username) {
-  const res = await axios.get(`https://api.roblox.com/users/get-by-username?username=${username}`);
-  return res.data.Id;
+  const response = await axios.post('https://users.roblox.com/v1/usernames/users', {
+    usernames: [username]
+  });
+  const user = response.data.data[0];
+  return user ? user.id : null;
 }
 
 // Helper: Get games by user ID
